@@ -1,0 +1,22 @@
+{
+  "name": "protocol-agent",
+  "description": "AI-powered laboratory protocol planning and reagent kit discovery. Generate structured execution plans for molecular biology workflows (RNA extraction, RT-qPCR, CRISPR, cell culture) and find specific reagent kit part numbers with verified catalog numbers from major vendors.",
+  "version": "1.0.0",
+  "author": {
+    "name": "mengbing"
+  },
+  "repository": "https://github.com/mengbingrock/protocol-agent-plugin",
+  "license": "MIT",
+  "keywords": [
+    "protocols",
+    "laboratory",
+    "molecular-biology",
+    "qPCR",
+    "RNA-extraction",
+    "reverse-transcription",
+    "reagents",
+    "kit-finder",
+    "biomedical",
+    "healthcare"
+  ]
+}
