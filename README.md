@@ -1,6 +1,8 @@
-# Protocol Agent Plugin for Claude Code
+# Protocol Agent Plugin
 
-AI-powered laboratory protocol planning and reagent kit discovery for Claude Code.
+AI-powered laboratory protocol planning and reagent kit discovery.
+
+Compatible with **Claude Code** and **OpenClaw**.
 
 ## Skills Included
 
@@ -49,9 +51,29 @@ Find specific reagent kit part numbers and catalog numbers for protocol steps.
 
 ## Installation
 
+### Claude Code
 ```
-/plugin install mengbing/protocol-agent-plugin
+/plugin install mengbingrock/protocol-agent-plugin
 ```
+Skills are in `skills/` with Claude Code-specific frontmatter (`allowed-tools`, `argument-hint`).
+
+### OpenClaw
+Copy the OpenClaw-compatible skills to your OpenClaw skills directory:
+```bash
+cp -r openclaw/skills/protocol-plan ~/.openclaw/skills/
+cp -r openclaw/skills/kit-finder ~/.openclaw/skills/
+```
+Skills are in `openclaw/skills/` with simplified frontmatter (no `allowed-tools` or multi-line YAML).
+
+### Differences Between Versions
+
+| Feature | `skills/` (Claude Code) | `openclaw/skills/` (OpenClaw) |
+|---------|------------------------|-------------------------------|
+| `allowed-tools` | Yes — restricts tool access | Removed — not supported |
+| `argument-hint` | Yes — shows usage hint | Removed — not supported |
+| Frontmatter format | Multi-line YAML | Single-line values only |
+| Skill content | Identical | Identical |
+| Reference data | Identical | Identical |
 
 ## Reference Data
 
