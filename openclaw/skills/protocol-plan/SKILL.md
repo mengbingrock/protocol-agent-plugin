@@ -21,9 +21,9 @@ Parse the user's input for two components:
 
 When the user supplies steps, generate a **detailed execution plan**:
 
-1. **Read reference materials** from `references/protocol-planning-guide.md` and `references/medical-domain-knowledge.md` in this skill's directory
+1. **Read reference materials** from `references/protocol-planning-guide.md`, `references/medical-domain-knowledge.md`, and `references/protocol-source-websites.md` in this skill's directory
 2. **Read any protocol files** in the project directory (look for `.md` and `.docx` files in the project root) to incorporate existing local protocol knowledge
-3. **Search the web** for supplementary information on the specific techniques mentioned in the steps. Use queries targeting authoritative sources (protocols.io, thermofisher.com, qiagen.com, nih.gov, nature.com, neb.com)
+3. **Search the web** for supplementary information on the specific techniques mentioned in the steps. Prefer the curated 22 sites listed in `references/protocol-source-websites.md` (Bio-protocol, Current Protocols, CSH Protocols, Nature Protocols, JOVE, Protocol Exchange, etc.); fall back to protocols.io, thermofisher.com, qiagen.com, nih.gov, neb.com
 4. **For each step**, produce:
    - Step number and title
    - Estimated duration (active time + passive time)
@@ -96,12 +96,16 @@ When the user supplies steps, generate a **detailed execution plan**:
 
 When the user provides only a task name without steps:
 
-1. **Read reference materials** from this skill's `references/` directory
-2. **Search the web** for reference protocols:
+1. **Read reference materials** from this skill's `references/` directory, including `references/protocol-source-websites.md` for the curated 22-site source list
+2. **Search the curated sources first** (full list + Path B ordering in `references/protocol-source-websites.md`):
+   - Lab techniques: Bio-protocol, Current Protocols, Cold Spring Harbor Protocols, Nature Protocols, JOVE
+   - Novel / open protocols: Protocol Exchange, Springer Nature Experiments, Morimoto Lab
+   - Visual / video methods: JOVE, BioGDP
+   - Sequence / primer design context: Benchling, Meinverse, Ensembl, GeneCards
+3. **Fall back to broader web search** if the curated sites don't cover the task:
    - Search queries: "[task name] protocol", "[task name] standard operating procedure", "[task name] laboratory method"
-   - Focus on authoritative sources: manufacturer protocols, peer-reviewed publications, NIH/CDC guidelines, university core facility SOPs
-   - Target domains: `protocols.io`, `nature.com`, `nih.gov`, `thermofisher.com`, `qiagen.com`, `neb.com`
-3. **Present 3-5 plan options** to the user:
+   - Additional authoritative domains: `protocols.io`, `nih.gov`, `thermofisher.com`, `qiagen.com`, `neb.com`
+4. **Present 3-5 plan options** to the user:
 
 ```
 # Protocol Options: [Task Name]
@@ -133,7 +137,7 @@ Based on [factors], Option [N] is recommended for [reason].
 **Reply with the option number to generate a full execution plan, or provide your own steps.**
 ```
 
-4. After the user selects an option, switch to **Path A** behavior using the steps from that protocol.
+5. After the user selects an option, switch to **Path A** behavior using the steps from that protocol.
 
 ## Important Guidelines
 
