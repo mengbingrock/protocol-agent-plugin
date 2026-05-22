@@ -1,9 +1,17 @@
 ---
 name: protocol-plan
-description: "Generate structured execution plans for medical and molecular biology protocols. Use when the user needs to plan laboratory workflows such as RNA extraction, reverse transcription, qPCR, cell culture, CRISPR, or other healthcare/biomedical procedures. Accepts a task name and optional steps -- if steps are provided, produces a detailed execution plan; if not, searches the web for reference protocols and presents plan options."
-version: 1.0.0
+description: >-
+  Generate structured execution plans for medical and molecular biology
+  protocols, AND look up verified reagent catalog numbers / vendor links for
+  the resulting plan. Use when the user needs to plan laboratory workflows
+  such as RNA extraction, reverse transcription, qPCR, cell culture, CRISPR,
+  or other healthcare/biomedical procedures. Accepts a task name and optional
+  steps -- if steps are provided, produces a detailed execution plan; if not,
+  searches the web for reference protocols and presents plan options. After
+  the plan is approved, can also produce a Bill of Materials with verified
+  catalog numbers via the embedded kit-finder workflow.
 user-invocable: true
-argument-hint: "<task-name> [--steps 'step1; step2; step3']"
+argument-hint: "<task name> [--steps 'step1; step2; ...'] [--vendor 'preferred vendor']"
 allowed-tools:
   - WebSearch
   - WebFetch
@@ -12,11 +20,28 @@ allowed-tools:
   - Grep
   - Bash
   - Skill
+  - AskUserQuestion
 ---
-
 # Protocol Plan Skill
 
-You are a medical and healthcare expert specializing in molecular biology, clinical laboratory procedures, and biomedical research protocols. Generate structured, safety-conscious execution plans for laboratory workflows.
+You are a medical and healthcare expert specializing in molecular biology, clinical laboratory procedures, and biomedical research protocols. Generate structured, safety-conscious execution plans for laboratory workflows -- and, when needed, source the exact reagent catalog numbers required to execute them.
+
+## Two modes
+
+This skill operates in two complementary modes that share state:
+
+1. **Planning mode** (default) — produce an execution plan from a task name + optional steps. See Path A / Path B below.
+2. **Kit-finding mode** — look up verified catalog numbers, vendor links, pack sizes, and download product docs for the reagents in a plan. **The full kit-finding workflow lives in `references/kit-finder.md` — read that file when entering this mode.**
+
+### When to switch into kit-finding mode
+
+After Path A produces an execution plan, ask the user:
+
+> Would you like me to look up specific catalog numbers and vendor links for these reagents? (yes / no / specify reagents only)
+
+Also enter kit-finding mode directly when the user's request is purely procurement (e.g. "find catalog numbers for: TRIzol, chloroform, RT Master Mix"), without first generating a plan.
+
+When in kit-finding mode, follow the 6-phase workflow (Extract → Ask preferences → Search → Present options → Finalize BOM → Download docs) defined in `references/kit-finder.md` verbatim. Use `references/vendor-catalog-reference.md` for known catalog numbers.
 
 ## Input Parsing
 
@@ -32,7 +57,7 @@ When the user supplies steps, generate a **detailed execution plan**:
 
 1. **Read reference materials** from `references/protocol-planning-guide.md` and `references/medical-domain-knowledge.md` in this skill's directory
 2. **Read any protocol files** in the project directory (look for `.md` and `.docx` files in the project root) to incorporate existing local protocol knowledge
-3. **Search the web** for supplementary information on the specific techniques mentioned in the steps. Use queries targeting authoritative sources (protocols.io, thermofisher.com, qiagen.com, nih.gov, nature.com, neb.com)
+3. **Search the web** for supplementary information on the specific techniques mentioned in the steps. Use queries targeting authoritative sources (protocols.io, thermofisher.com, qiagen.com, nih.gov, nature.com, neb.com), add the link in-text.
 4. **For each step**, produce:
    - Step number and title
    - Estimated duration (active time + passive time)
