@@ -17,6 +17,8 @@ Parse the user's input for:
 
 ## Workflow
 
+> **Interactive confirmation rule:** At the end of every phase, use the `AskUserQuestion` tool to present choices and get user confirmation before proceeding to the next phase. Always list the recommended option first with "(Recommended)" in the label. Do NOT proceed to the next phase without user confirmation.
+
 ### Phase 1: Extract Reagent Requirements
 
 1. **Read reference materials** from `references/vendor-catalog-reference.md` in this skill's directory for known catalog numbers
@@ -26,29 +28,23 @@ Parse the user's input for:
    - Supporting reagents (e.g., chloroform, ethanol, RNase-free water)
    - Consumables with specific requirements (e.g., optical plates, filter tips)
 
+4. **Ask user to confirm the reagent list** using `AskUserQuestion`:
+   - Present the extracted reagent list organized by protocol step
+   - Options:
+     - "Looks correct, proceed (Recommended)" — move to Phase 2
+     - "I need to add/remove reagents" — user provides edits, then re-confirm
+     - "Re-analyze from scratch" — re-parse the input
+
 ### Phase 2: Ask User for Preferences
 
-**Before searching**, present the extracted reagent list and ask the user:
+**Before searching**, use `AskUserQuestion` for each reagent category to ask the user about their preferences. For each reagent, present:
 
-```
-# Reagents Identified for Your Protocol
+- Options:
+  - "Search all vendors (Recommended)" — find 2-3 options from different vendors
+  - "I have a preferred kit" — user specifies a kit name or catalog number
+  - "Skip this reagent" — already in stock, no need to order
 
-I've identified the following reagents/kits needed:
-
-## Step 1: [Step Name]
-1. [Reagent A] — e.g., TRIzol or equivalent lysis reagent
-2. [Reagent B] — e.g., chloroform
-...
-
-## Step 2: [Step Name]
-1. [Reagent C] — e.g., reverse transcription kit
-...
-
-**Do you already have preferred kits or catalog numbers for any of these?**
-For example: "We use SYBR Select Master Mix (Cat# 4472908)" or "We prefer QIAGEN kits for RNA extraction."
-
-Reply with your preferences, or say "search all" to have me find options for everything.
-```
+You may batch multiple reagents into a single `AskUserQuestion` using `multiSelect: true` if asking which reagents to search vs. skip. But for vendor preference, ask per-reagent or per-category.
 
 ### Phase 3: Search for Options
 
@@ -80,52 +76,30 @@ For each reagent where the user did **not** provide a specific catalog number:
    - The product is currently available (not discontinued)
    - The pack size and specifications are correct
 
+4. **Ask user to confirm search results** using `AskUserQuestion`:
+   - Present a summary of how many options were found per reagent
+   - Options:
+     - "Results look good, proceed to selection (Recommended)" — move to Phase 4
+     - "Search more vendors for specific reagents" — user specifies which reagents need more options
+     - "Replace a reagent and re-search" — swap out a reagent and search again
+
 ### Phase 4: Present Options for Confirmation
 
-Present the findings organized by protocol step, with a recommended option highlighted:
+First, present the findings organized by protocol step as a text summary showing all options with details (product name, catalog #, vendor, pack size, link, and recommendation reason).
 
-```
-# Kit & Reagent Options: [Protocol Name]
+Then, **for each reagent**, use `AskUserQuestion` to let the user pick their preferred option. Use the `preview` field on each option to show product details:
 
----
+- Options (dynamically built from search results):
+  - "[Product A — Vendor — Cat#] (Recommended)" — with preview showing full details (pack size, specs, link, why recommended)
+  - "[Product B — Vendor — Cat#]" — with preview showing full details
+  - "[Product C — Vendor — Cat#]" — with preview showing full details
+  - "Search for different options" — re-search this reagent with different terms
 
-## Step 1: [Step Name]
-
-### 1.1 [Reagent Category] (e.g., Lysis Reagent)
-
-| # | Product | Catalog # | Vendor | Pack Size | Link |
-|---|---------|-----------|--------|-----------|------|
-| ▸ **A** | **[Recommended Product]** | **[Cat#]** | **[Vendor]** | **[Size]** | **[URL]** |
-| B | [Alternative 1] | [Cat#] | [Vendor] | [Size] | [URL] |
-| C | [Alternative 2] | [Cat#] | [Vendor] | [Size] | [URL] |
-
-> **Recommendation:** Option A because [reason — e.g., most widely cited, includes all components, best value].
-
-### 1.2 [Next Reagent Category]
-...
-
----
-
-## Step 2: [Step Name]
-...
-
----
-
-## Summary of Recommendations
-
-| Step | Reagent | Recommended Product | Catalog # | Vendor | Link |
-|------|---------|-------------------|-----------|--------|------|
-| 1 | Lysis reagent | [Product] | [Cat#] | [Vendor] | [URL] |
-| 1 | Chloroform | [Product] | [Cat#] | [Vendor] | [URL] |
-| 2 | RT Kit | [Product] | [Cat#] | [Vendor] | [URL] |
-| ... | ... | ... | ... | ... | ... |
-
-**Please confirm your selections or specify changes** (e.g., "Use option B for the RT kit", "Change chloroform to Fisher brand").
-```
+Process reagents one at a time or group by protocol step, so the user can make informed choices at each step before moving on.
 
 ### Phase 5: Finalize and Output
 
-After user confirmation, produce a final **Bill of Materials** document:
+After all reagent selections are made, produce a final **Bill of Materials** document:
 
 ```
 # Bill of Materials: [Protocol Name]
@@ -143,6 +117,12 @@ After user confirmation, produce a final **Bill of Materials** document:
 - [Storage requirements upon receipt]
 - [Items that may already be in common lab stock]
 ```
+
+Then **ask user to confirm the BOM** using `AskUserQuestion`:
+- Options:
+  - "BOM is correct, finalize (Recommended)" — proceed to Phase 6
+  - "I need to change selections" — go back to Phase 4 for specific reagents
+  - "Export and proceed to documentation download" — save BOM and move to Phase 6
 
 ### Phase 6: Download Kit Documentation
 
@@ -171,6 +151,12 @@ After the Bill of Materials is finalized, download or save the PDF documentation
 
 Files saved to: `references/kit-docs/`
 ```
+
+4. **Ask user what to do next** using `AskUserQuestion`:
+   - Options:
+     - "Done — all documentation collected (Recommended)" — workflow complete
+     - "Search for additional documentation for specific products" — user specifies which
+     - "Re-download failed items" — retry items that failed to download
 
 ## Important Guidelines
 
