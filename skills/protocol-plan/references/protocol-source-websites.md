@@ -1,64 +1,66 @@
 # Curated Protocol Source Websites
 
-A vetted list of 22 websites to consult when searching for reference protocols in **Path B**. Prefer these over generic web searches — they cover protocols, literature analysis, sequence tools, gene databases, journal finders, and ready-to-use experimental methods.
+A vetted list of 22 websites to consult when searching for reference protocols in **Path B**. Prefer these over generic web searches. Each searchable site below has a verified search-URL template — replace `{query}` with a URL-encoded keyword.
 
-When the user provides only a task name, search these sources first (in roughly the order below) and cite the URL of the protocol you adopt.
+> Last verified: 2026-05-22. Sites flagged `[bot-blocked]` return HTTP 403 to plain `curl` but work in a real browser — use `WebFetch` (which uses a real user agent) when searching them programmatically.
 
-## 1. Protocols & experimental methods
+## A. Searchable protocol & methods databases
 
-| # | Site | URL | What it's good for |
-|---|------|-----|---------------------|
-| 1 | Cold Spring Harbor Protocols | http://cshprotocols.cshlp.org/ | Authoritative life-sciences protocols with detailed steps and full-text downloads |
-| 5 | Bio-protocol | https://bio-protocol.org/en | Peer-validated protocols: WB, RT-qPCR, IF, FCM, animal work, cell culture. Chinese search supported |
-| 17 | Nature Protocols | http://nature.com/nprot | Detailed quarterly methods (since 2006) |
-| 18 | JOVE (Journal of Visualized Experiments) | http://jove.com/cn/ | Video-based protocols for IF, surgical, cell culture techniques. PDF + video. Free copies sometimes on PMC: https://www.ncbi.nlm.nih.gov/pmc/ |
-| 19 | Protocol Exchange | http://protocolexchange.researchsquare.com | Nature-sponsored open platform — author-submitted protocols across 35 fields |
-| 20 | Current Protocols (Wiley) | http://currentprotocols.onlinelibrary.wiley.com | Reference lab manuals across 19 disciplines — full materials lists, critical parameters, troubleshooting |
-| 21 | Morimoto Lab (Northwestern) | https://www.morimotolab.org/protocols | Cell culture, WB, PCR, RNA/DNA extraction, transfection — molecular biology focus |
-| 22 | Springer Nature Experiments | http://experiments.springernature.com | Aggregates Nature Protocol, Nature Reviews Methods Primers, Nature Methods, Springer Protocols |
+| # | Site | Homepage | Search URL template |
+|---|------|----------|---------------------|
+| 1 | Cold Spring Harbor Protocols | https://cshprotocols.cshlp.org/ | `https://cshprotocols.cshlp.org/search?fulltext={query}&submit=yes` |
+| 5 | Bio-protocol | https://bio-protocol.org/en | `https://bio-protocol.org/searchsite.aspx?word={query}` |
+| 17 | Nature Protocols | https://www.nature.com/nprot | `https://www.nature.com/search?q={query}&journal=nprot` |
+| 18 | JOVE | https://www.jove.com/cn/ | `https://www.jove.com/search?query={query}` |
+| 19 | protocols.io *(replaces the discontinued Nature Protocol Exchange)* | https://www.protocols.io/ | `https://www.nature.com/search?q={query}&type=protocolexchange` (legacy content via Nature) — protocols.io's own search requires the SPA; for new submissions browse directly |
+| 20 | Current Protocols (Wiley) `[bot-blocked]` | https://currentprotocols.onlinelibrary.wiley.com/ | `https://currentprotocols.onlinelibrary.wiley.com/action/doSearch?AllField={query}` |
+| 22 | Springer Nature Experiments | https://experiments.springernature.com/ | `https://experiments.springernature.com/search?query={query}` |
 
-## 2. Literature discovery & analysis
+> Note on #19: `protocolexchange.researchsquare.com` now 301-redirects to protocols.io; the standalone Nature Protocol Exchange is discontinued. Legacy content is still indexed under Nature's site search.
 
-| # | Site | URL | What it's good for |
-|---|------|-----|---------------------|
-| 2 | CiteXs (塞特新思) | https://www.citexs.com/Paperpicky | Citation-network mapping for topic exploration |
-| 3 | Connected Papers | https://www.connectedpapers.com/ | Visualize papers related to a seed paper (use incognito for free tier) |
-| 4 | Paper Digest | https://www.paperdigest.org/ | AI literature analysis — auto-generated summaries with cited references; good for reviews |
-| 12 | Elsevier Journal Finder | https://journalfinder.elsevier.com/ | Match a manuscript abstract to the best-fit Elsevier journals (IF, review time, OA policy) |
+## B. Searchable literature & analysis tools
 
-## 3. Bioinformatics, sequence & visualization tools
+| # | Site | Homepage | Search URL template |
+|---|------|----------|---------------------|
+| 2 | CiteXs (塞特新思) | https://www.citexs.com/Paperpicky | `https://www.citexs.com/Paperpicky?keyword={query}` |
+| 3 | Connected Papers | https://www.connectedpapers.com/ | `https://www.connectedpapers.com/search?q={query}` *(seed is typically a paper title or DOI)* |
+| 4 | Paper Digest | https://www.paperdigest.org/ | `https://www.paperdigest.org/search/?topic={query}` |
+| 12 | Elsevier Journal Finder | https://journalfinder.elsevier.com/ | `https://journalfinder.elsevier.com/results?paperTitle={query}` *(query = abstract or title)* |
 
-| # | Site | URL | What it's good for |
-|---|------|-----|---------------------|
-| 7 | BioGDP | https://biogdp.com/ | Templates for mechanism diagrams, cell structures, pathways, experimental schematics |
-| 8 | BioInCloud (微科盟) | https://www.bioincloud.tech/ | 65 visualization tools: scatter, bar, bubble, violin, network, heatmap; statistical analysis |
-| 9 | OmicShare Tools | https://www.omicshare.com/tools/ | Interactive bioinformatics tools + tutorials for genomics/transcriptomics |
-| 10 | Benchling | https://www.benchling.com/ | DNA/protein sequence design + visualization, CRISPR editing, plasmid mapping |
-| 11 | Meinverse (觅应) | https://meinverse.cn/ | China-developed Benchling alternative: sequence visualization, protein rendering, alignments, primer design |
-| 16 | R Graph Gallery | https://r-graph-gallery.com/index.html | ggplot2 / tidyverse chart catalog with full reproducible R code |
+## C. Searchable gene & expression databases
 
-## 4. Gene & expression databases
+| # | Site | Homepage | Search URL template |
+|---|------|----------|---------------------|
+| 13 | ArrayExpress (EBI BioStudies) | https://www.ebi.ac.uk/biostudies/arrayexpress | `https://www.ebi.ac.uk/biostudies/arrayexpress/studies?query={query}` |
+| 14 | Ensembl | https://www.ensembl.org/ | `https://www.ensembl.org/Multi/Search/Results?q={query}` *(mirror-redirect may rate-limit/404 transient — retry or use `useast.ensembl.org` / `asia.ensembl.org` directly)* |
+| 15 | GeneCards `[bot-blocked]` | https://www.genecards.org/ | `https://www.genecards.org/Search/Keyword?queryString={query}` |
+| 16 | R Graph Gallery | https://r-graph-gallery.com/ | `https://r-graph-gallery.com/?s={query}` |
 
-| # | Site | URL | What it's good for |
-|---|------|-----|---------------------|
-| 13 | ArrayExpress (EBI) | https://www.ebi.ac.uk/arrayexpress/ | High-quality microarray + NGS public datasets; suitable for transcriptomics meta-analysis |
-| 14 | Ensembl | https://www.ensembl.org/ | Complete genome annotation, multi-species queries, gene structure, transcript alignment, variants |
-| 15 | GeneCards | https://www.genecards.org/ | One-stop human gene info database; keyword + disease-reverse search |
+## D. Tools & platforms (browse directly — no keyword search)
 
-## 5. Writing assistance
+These provide on-site tools or templates rather than a searchable corpus. Don't try to URL-search them; link to the homepage and let the user pick a tool.
 
-| # | Site | URL | What it's good for |
-|---|------|-----|---------------------|
-| 6 | Wordvice AI | https://wordvice.ai/cn | AI grammar/spelling/punctuation checker with rewrite suggestions for academic English |
+| # | Site | URL | Use for |
+|---|------|-----|---------|
+| 6 | Wordvice AI | https://wordvice.ai/cn | AI grammar/spelling check for academic English |
+| 7 | BioGDP | https://biogdp.com/ | Diagram templates (mechanism, cell structure, pathway). Client-side SPA — no deep links |
+| 8 | BioInCloud (微科盟) | https://www.bioincloud.tech/ | 65 visualization tools (scatter, bar, bubble, violin, network, heatmap) |
+| 9 | OmicShare Tools | https://www.omicshare.com/tools/ | Tool index browsed by category (`/tools/Home/Index/index/type/{category}`), not by keyword |
+| 10 | Benchling | https://www.benchling.com/ | DNA/protein design, CRISPR, plasmid maps — login-gated SaaS |
+| 11 | Meinverse (觅应) | https://meinverse.cn/ | Sequence visualization, protein rendering, primer design |
+| 21 | Morimoto Lab | https://www.morimotolab.org/protocols | Single page of curated cell-culture / WB / PCR protocols — read linearly |
 
 ## Path B search order
 
 1. **For specific lab techniques** (WB, qPCR, RNA extraction, IF, cell culture, CRISPR): start with **Bio-protocol**, **Current Protocols**, **Cold Spring Harbor Protocols**, **Nature Protocols**, **JOVE**.
 2. **For video / visual learning needs**: **JOVE**, then **BioGDP** for schematic diagrams.
-3. **For novel or niche techniques**: **Protocol Exchange**, **Springer Nature Experiments**, **Morimoto Lab**.
+3. **For novel or niche techniques**: **protocols.io**, **Springer Nature Experiments**, **Morimoto Lab**.
 4. **For literature context before picking a protocol**: **Connected Papers**, **Paper Digest**, **CiteXs**.
 5. **For sequence / primer design tasks within a protocol**: **Benchling**, **Meinverse**, **Ensembl**, **GeneCards**.
 6. **For data-analysis or plotting follow-up**: **OmicShare Tools**, **BioInCloud**, **R Graph Gallery**, **ArrayExpress**.
 7. **For manuscript writing after the experiment**: **Wordvice AI**, **Elsevier Journal Finder**.
 
-Always include the source URL in the final plan's **References** section.
+When using a search-URL template:
+- URL-encode the query before substitution (`PCR primer design` → `PCR%20primer%20design`).
+- Bot-blocked sites (`[bot-blocked]`) require `WebFetch` rather than raw `curl`.
+- Always include the resolved URL in the final plan's **References** section.
