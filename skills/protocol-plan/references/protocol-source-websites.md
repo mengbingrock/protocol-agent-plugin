@@ -1,6 +1,6 @@
 # Curated Protocol Source Websites
 
-A vetted list of 22 websites to consult when searching for reference protocols in **Path B**. Prefer these over generic web searches. Each searchable site below has a verified search-URL template — replace `{query}` with a URL-encoded keyword.
+A vetted list of 22 websites to consult during **Plan mode** when verifying the high-level method (which procedures are standard, which method variants exist) — not to harvest step-by-step detail. Prefer these over generic web searches. Each searchable site below has a verified search-URL template — replace `{query}` with a URL-encoded keyword.
 
 > Last verified: 2026-05-22. Sites flagged `[bot-blocked]` return HTTP 403 to plain `curl` but work in a real browser — use `WebFetch` (which uses a real user agent) when searching them programmatically.
 
@@ -50,7 +50,7 @@ These provide on-site tools or templates rather than a searchable corpus. Don't 
 | 11 | Meinverse (觅应) | https://meinverse.cn/ | Sequence visualization, protein rendering, primer design |
 | 21 | Morimoto Lab | https://www.morimotolab.org/protocols | Single page of curated cell-culture / WB / PCR protocols — read linearly |
 
-## Path B search order
+## Plan-mode search order (toolkit search for method selection)
 
 1. **For specific lab techniques** (WB, qPCR, RNA extraction, IF, cell culture, CRISPR): start with **Bio-protocol**, **Current Protocols**, **Cold Spring Harbor Protocols**, **Nature Protocols**, **JOVE**.
 2. **For video / visual learning needs**: **JOVE**, then **BioGDP** for schematic diagrams.

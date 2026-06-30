@@ -8,20 +8,18 @@ Compatible with **Claude Code** and **OpenClaw**.
 
 ### `/protocol-agent:protocol-plan`
 
-Generate structured, safety-conscious execution plans for laboratory workflows.
+Plan laboratory workflows in **two sequential modes**:
 
-**With steps provided** — produces a detailed execution plan with:
-- Sub-steps with specific volumes, temperatures, and times
-- Safety notes (PPE, chemical hazards, waste disposal)
-- Quality checkpoints and troubleshooting
-- Pause/stop points with storage conditions
-- Timeline summary and materials checklist
+**Plan mode** (first) — produces a *high-level* plan: an ordered list of procedures / methods (e.g. RNA extraction → reverse transcription → qPCR). It drafts the method from domain knowledge, **verifies it against the curated 22-site protocol-source list** (a "toolkit search" to choose the method, not to harvest step detail), and confirms the method for each procedure with the user via **AskUserQuestion** (pick a listed method or choose "Other" to supply your own).
 
-**Without steps** — searches the web for reference protocols and presents 3–5 plan options to choose from.
+**Build mode** (second) — takes the confirmed plan and, **procedure by procedure**, presents reagent-kit options. You **select a kit per procedure with AskUserQuestion** (or fill in your own preferred catalog number via "Other"), and it assembles a **Bill of Materials** with verified catalog numbers and direct product links — optionally downloading kit documentation.
+
+The Build-mode workflow is embedded as a reference (`references/build-mode.md`); to expand any single procedure into a detailed step-by-step SOP (volumes, temperatures, timings), just ask.
 
 **Example:**
 ```
-/protocol-plan "RNA extraction and qPCR" --steps 'TRIzol extraction; Reverse transcription; qPCR with SYBR Green'
+/protocol-plan "RNA extraction and qPCR"          # → Plan mode, then offers Build mode
+/protocol-plan "RNA extraction and qPCR" --mode build
 ```
 
 ### `/protocol-agent:kit-finder`
